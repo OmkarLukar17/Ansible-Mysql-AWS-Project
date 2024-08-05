@@ -1,0 +1,18 @@
+---
+- name: Take backup of MySQL and upload it to S3 bucket
+  hosts: all
+  become: yes
+  vars_files:
+    - vault.yml
+
+  tasks:
+    - name: Take backup of MySQL
+      shell: >
+        mysqldump -u{{ mysql_user }} -p{{ mysql_password }} --all-databases > /tmp/backupfile.sql
+
+    - name: Upload the backup to s3
+      become: yes
+      shell: >
+        AWS_ACCESS_KEY_ID={{ aws_access_key_id }} AWS_SECRET_ACCESS_KEY={{ aws_secret_access_key }} aws s3 cp /tmp/backupfile.sql s3://desvops-mysql/
+      args:
+        executable: /bin/bash
