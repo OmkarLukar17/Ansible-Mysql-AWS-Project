@@ -1,0 +1,4 @@
+mysql_user = (Enter your user mysql username)
+mysql_password = (Enter your mysql password)
+aws_access_key_id = (Enter your AWS access key id which you will get from IAM user)
+aws_access_key = (Enter your AWS access key which you will get from IAM user)
